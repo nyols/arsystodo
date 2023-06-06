@@ -8,16 +8,18 @@ use App\Models\Tdl\Todo;
 class Add extends Component
 {
     public $todoText;
+
     public function render()
     {
         return view('livewire.tdl.todo.add');
     }
     
-    public function saveTodo(){
-        //dd($this->todoText);
+    public function saveTodo()
+    {
         Todo::create([
             'todotext' => $this->todoText,
         ]);
+
         $this->emitUp('cancelAddTodo');
         $this->emit('refreshlist');
     }

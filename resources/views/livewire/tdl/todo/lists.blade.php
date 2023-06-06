@@ -4,7 +4,7 @@
     </b>
     <hr>
 
-    @foreach ($allTodo as $index => $todo)
+    @foreach ($allTodo as $todo)
     <table class="table mb-4">
         <tbody>
             <tr>
@@ -12,24 +12,24 @@
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="checkbox" class="form-check-input" value=""
-                                wire:model="allTodo.{{ $index }}.completed">
+                                wire:model="completed" wire:click="$emitUp('statusTodo', {{ $todo->id }})">
                             {{ $todo->todotext }}
                         </label>
                     </div>
                     <div>
                         <label for="comment">Comment:</label>
                         <textarea class="form-control" rows="5" id="comment"
-                            wire:model="allTodo.{{ $index }}.comment"></textarea>
+                            wire:model="comment">{{ $todo->comment }}</textarea>
                     </div>
                     <div>
-                        <label for="submission_date">Tanggal Pengumpulan:</label>
-                        <input type="date" class="form-control" id="submission_date"
-                            wire:model="allTodo.{{ $index }}.submission_date">
+                        <label for="created_date">Created:</label>
+                        <input type="text" class="form-control" id="created_date"
+                            value="{{ $todo->created_at }}" disabled>
                     </div>
                     <div>
-                        <label for="deadline">Deadline:</label>
-                        <input type="date" class="form-control" id="deadline"
-                            wire:model="allTodo.{{ $index }}.deadline">
+                        <label for="updated_date">Updated:</label>
+                        <input type="text" class="form-control" id="updated_date"
+                            value="{{ $todo->updated_at }}" disabled>
                     </div>
                     <div>
                         <button wire:click="$emitUp('editTodo', {{ $todo->id }})" type="submit"
