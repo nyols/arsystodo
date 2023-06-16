@@ -1,26 +1,18 @@
 <div>
-    <table class="table mb-4">
-        <tbody>
-            <tr>
-                <td>
-                    <div>
-                        <label for="comment">Comment:</label>
-                        <textarea class="form-control" rows="5" id="comment"
-                            wire:model="comment"></textarea>
-                    </div>
-                    <div>
-                        <label for="created_date">Created:</label>
-                        <input type="text" class="form-control" id="created_date"
-                            value="{{ $createdDate }}" disabled>
-                    </div>
-                    <div>
-                        <label for="updated_date">Updated:</label>
-                        <input type="text" class="form-control" id="updated_date"
-                            value="{{ $updatedDate }}" disabled>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
+    <form wire:submit.prevent="saveComment">
+        <div>
+            <label for="comment">Comment:</label>
+            <textarea wire:model="comment" id="comment"></textarea>
+        </div>
+        <div>
+            <label for="created_date">Created:</label>
+            <input type="text" wire:model="createdDate" id="created_date" disabled>
+        </div>
+        <div>
+            <label for="updated_date">Updated:</label>
+            <input type="text" wire:model="updatedDate" id="updated_date" disabled>
+        </div>
+        <button type="submit">Submit</button>
+        <button wire:click="exitContent">Back to List</button>
+    </form>
 </div>

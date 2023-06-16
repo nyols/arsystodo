@@ -12,7 +12,7 @@ class Content extends Component
     public $createdDate;
     public $updatedDate;
 
-    protected $listeners = ['refreshContent'];
+    protected $listeners = ['refreshContent', 'exitContent'];
 
     public function mount($todoId)
     {
@@ -31,6 +31,20 @@ class Content extends Component
         $this->comment = $todo->comment;
         $this->createdDate = $todo->created_at;
         $this->updatedDate = $todo->updated_at;
+    }
+
+    public function saveComment()
+    {
+        $todo = Todo::findOrFail($this->todoId);
+        $todo->comment = $this->comment;
+        $todo->save();
+
+        $this->emit('refreshContent');
+    }
+
+    public function exitContent()
+    {
+        $this->emit('exitContent');
     }
 
     public function refreshContent()

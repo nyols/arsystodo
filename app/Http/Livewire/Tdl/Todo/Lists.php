@@ -7,7 +7,7 @@ use App\Models\Tdl\Todo;
 
 class Lists extends Component
 {
-    protected $listeners = ['deleteTodo', 'refreshList'];
+    protected $listeners = ['deleteTodo', 'refreshList', 'exitContent'];
     public $allTodo;
     public $completed = false;
     public $comment;
@@ -69,5 +69,9 @@ class Lists extends Component
         $this->comment = $todo->comment;
     }
 
-
+    public function exitContent()
+    {
+        $this->openContentId = null;
+        $this->reset(['comment', 'checked']);
+    }
 }
