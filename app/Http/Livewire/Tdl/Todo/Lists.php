@@ -14,6 +14,7 @@ class Lists extends Component
     public $showAddForm = false;
     public $selectedTodo;
     public $checked = false;
+    public $openContentId;
 
     public function mount()
     {
@@ -62,9 +63,11 @@ class Lists extends Component
 
     public function selectTodo($todoId)
     {
-        $this->selectedTodo = $todoId;
-        $todo = Todo::findOrFail($this->selectedTodo);
+        $this->openContentId = $todoId;
+        $todo = Todo::findOrFail($this->openContentId);
         $this->checked = $todo->completed == 1;
         $this->comment = $todo->comment;
     }
+
+
 }
