@@ -13,7 +13,7 @@ class Add extends Component
     {
         return view('livewire.tdl.todo.add');
     }
-    
+
     public function saveTodo()
     {
         Todo::create([
@@ -21,6 +21,6 @@ class Add extends Component
         ]);
 
         $this->emitUp('cancelAddTodo');
-        $this->emit('refreshlist');
+        $this->emit('refreshList');
     }
 }

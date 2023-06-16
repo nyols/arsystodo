@@ -7,10 +7,13 @@ use App\Models\Tdl\Todo;
 
 class Lists extends Component
 {
-    protected $listeners = ['deleteTodo', 'cancelAddTodo', 'refreshlist' => '$refresh'];
+    protected $listeners = ['deleteTodo', 'refreshList'];
     public $allTodo;
-    public $completed;
+    public $completed = false;
     public $comment;
+    public $showAddForm = false;
+    public $selectedTodo;
+    public $checked = false;
 
     public function mount()
     {
@@ -33,12 +36,35 @@ class Lists extends Component
         $this->loadTodoList();
     }
 
-    public function statusTodo($todoId)
+    public function statusTodo()
     {
-        $todo = Todo::findOrFail($todoId);
-        $todo->completed = $this->completed;
+        $todo = Todo::findOrFail($this->selectedTodo);
+        $todo->completed = $this->checked ? 1 : 0;
         $todo->comment = $this->comment ?? '';
         $todo->save();
         $this->loadTodoList();
+    }
+
+    public function refreshList()
+    {
+        $this->loadTodoList();
+    }
+
+    public function cancelAddTodo()
+    {
+        $this->showAddForm = false;
+    }
+
+    public function openAddForm()
+    {
+        $this->showAddForm = true;
+    }
+
+    public function selectTodo($todoId)
+    {
+        $this->selectedTodo = $todoId;
+        $todo = Todo::findOrFail($this->selectedTodo);
+        $this->checked = $todo->completed == 1;
+        $this->comment = $todo->comment;
     }
 }
