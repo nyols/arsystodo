@@ -245,7 +245,7 @@ return [
         [
             'text'       => 'To-Do List',
             'route'      => 'tdl.home',
-            'icon'      => 'far fa-fw fa-heart',
+            'icon'      => 'fas fa-fw fa-list',
             //'roles'     => ['reviewer', 'committee','author'],
         ],
 

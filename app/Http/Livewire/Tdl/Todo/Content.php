@@ -45,6 +45,7 @@ class Content extends Component
     public function exitContent()
     {
         $this->emit('exitContent');
+        $this->emit('refreshList');
     }
 
     public function refreshContent()

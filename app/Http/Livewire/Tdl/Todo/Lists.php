@@ -9,11 +9,9 @@ class Lists extends Component
 {
     protected $listeners = ['deleteTodo', 'refreshList', 'exitContent'];
     public $allTodo;
-    public $completed = false;
-    public $comment;
+    public $completed = [];
     public $showAddForm = false;
     public $selectedTodo;
-    public $checked = false;
     public $openContentId;
 
     public function mount()
@@ -29,6 +27,9 @@ class Lists extends Component
     public function loadTodoList()
     {
         $this->allTodo = Todo::all();
+
+        // Initialize the completed array with default values
+        $this->completed = $this->allTodo->pluck('completed', 'id')->toArray();
     }
 
     public function deleteTodo($todoId)
@@ -37,11 +38,10 @@ class Lists extends Component
         $this->loadTodoList();
     }
 
-    public function statusTodo()
+    public function statusTodo($todoId)
     {
-        $todo = Todo::findOrFail($this->selectedTodo);
-        $todo->completed = $this->checked ? 1 : 0;
-        $todo->comment = $this->comment ?? '';
+        $todo = Todo::findOrFail($todoId);
+        $todo->completed = $this->completed[$todoId] ? 1 : 0;
         $todo->save();
         $this->loadTodoList();
     }
@@ -64,14 +64,12 @@ class Lists extends Component
     public function selectTodo($todoId)
     {
         $this->openContentId = $todoId;
-        $todo = Todo::findOrFail($this->openContentId);
-        $this->checked = $todo->completed == 1;
-        $this->comment = $todo->comment;
+        $this->completed[$todoId] = Todo::findOrFail($todoId)->completed == 1;
     }
 
     public function exitContent()
     {
         $this->openContentId = null;
-        $this->reset(['comment', 'checked']);
+        $this->reset(['completed']);
     }
 }
